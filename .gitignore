@@ -1,0 +1,13 @@
+node_modules/**/*
+npm-debug.*
+
+build/
+.eslintcache
+dist*
+.vscode/
+.DS_Store
+records.json
+stats.json
+yarn.lock
+yarn-error.log
+package-lock.json

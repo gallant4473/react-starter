@@ -1,0 +1,22 @@
+{
+  "DEVELOPMENT": {
+    "app": {
+      "title": "App development"
+    }
+  },
+  "PRODUCTION": {
+    "app": {
+      "title": "App"
+    }
+  },
+  "STAGING": {
+    "app": {
+      "title": "App staging"
+    }
+  },
+  "QA": {
+    "app": {
+      "title": "App qa"
+    }
+  }
+}
