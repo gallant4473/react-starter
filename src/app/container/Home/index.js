@@ -1,17 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { CheckboxGroup } from 'reusable-react-components'
 
-class Home extends Component {
-  render () {
-    return (
-      <div className='hello' >
-        it's my home
-        <button onClick={() => this.props.history.push('/about/1')} >go to about</button>
-        <button onClick={() => this.props.history.push('/contact')} >go to contact</button>
-        <CheckboxGroup id='checkbox' options={[1, 2, 3]} active={[]} onChange={(value) => console.log(value)} />
-      </div>
-    )
+const Home = props => (
+  <div className='hello' >
+    its my home
+    <button onClick={() => props.history.push('/about')} >go to about</button>
+    <button onClick={() => props.history.push('/contact')} >go to contact</button>
+  </div>
+)
+
+Home.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  })
+}
+Home.defaultProps = {
+  history: {
+    push: () => ''
   }
 }
 

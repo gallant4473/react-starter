@@ -7,7 +7,10 @@
     "dev:web": "webpack-dev-server --mode=development --env.TYPE=DEVELOPMENT --env.APP=app",
     "build:app": "webpack --mode=production --env.TYPE=PRODUCTION --env.APP=app",
     "build:appStaging": "webpack --mode=production --env.TYPE=STAGING --env.APP=app",
-    "build:appQa": "webpack --mode=production --env.TYPE=QA --env.APP=app"
+    "build:appQa": "webpack --mode=production --env.TYPE=QA --env.APP=app",
+    "sass-lint": "sass-lint -c .sass-lint.yml --verbose --no-exit",
+    "lint": "eslint ./src/**/**.js",
+    "precommit": "npm run lint && npm run sass-lint"
   },
   "keywords": [
     "Webpack 4",
@@ -19,6 +22,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-loadable": "^5.3.1",
@@ -28,6 +32,7 @@
   "devDependencies": {
     "autoprefix": "^1.0.1",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-env": "^1.6.1",
@@ -35,12 +40,19 @@
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
     "git-revision-webpack-plugin": "^2.5.1",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^3.0.6",
     "html-webpack-template": "^6.1.0",
+    "husky": "^0.14.3",
     "jest": "^23.0.0-alpha.0",
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.8.3",

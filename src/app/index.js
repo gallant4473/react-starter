@@ -6,7 +6,7 @@ import 'react-hot-loader/patch'
 import Main from './container/Main'
 import '../assets/styles/index.scss'
 
-const render = Component => {
+const render = (Component) => {
   ReactDOM.render(<AppContainer><Component /></AppContainer>, document.getElementById('app'))
 }
 

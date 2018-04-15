@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Loadable from 'react-loadable'
 
@@ -23,18 +23,14 @@ const ContactPage = Loadable({
   }
 })
 
-class Main extends Component {
-  render () {
-    return (
-      <Router>
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route exact path='/about/1' component={AboutPage} />
-          <Route exact path='/contact' component={ContactPage} />
-        </Switch>
-      </Router>
-    )
-  }
-}
+const Main = () => (
+  <Router>
+    <Switch>
+      <Route exact path='/' component={HomePage} />
+      <Route exact path='/about' component={AboutPage} />
+      <Route exact path='/contact' component={ContactPage} />
+    </Switch>
+  </Router>
+)
 
 export default Main
