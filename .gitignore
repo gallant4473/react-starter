@@ -11,3 +11,5 @@ stats.json
 yarn.lock
 yarn-error.log
 package-lock.json
+.idea/
+coverage
