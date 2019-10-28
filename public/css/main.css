@@ -5,9 +5,6 @@
 
 body {
   background: lime;
-  background-image: url("../images/logo.jpeg");
-  background-repeat: repeat;
-  /* background-position: center; */
   font-family: 'myfontfamily', Arial, sans-serif;
 }
 
