@@ -1,12 +1,22 @@
-import React from "react";
-import "react-dom";
+import { AppContainer } from 'react-hot-loader'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import 'react-hot-loader/patch'
 
+import Main from './container/Main'
+import '../public/css/main.scss';
+// import '../public/css/main.css';
 
-import '../public/css/main.css';
-import component from "./component";
-import { bake } from "./shake";
+const render = (Component) => {
+  ReactDOM.render(<AppContainer><Component /></AppContainer>, document.getElementById('app'))
+}
 
-console.log(React)
+render(Main)
 
-document.body.appendChild(component());
-bake()
+if (module.hot) {
+  module
+    .hot
+    .accept('./container/Main', () => {
+      render(Main)
+    })
+}

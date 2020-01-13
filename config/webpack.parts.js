@@ -150,6 +150,7 @@ exports.extractSCSS = ({ include, exclude, use = [] } = {}) => {
           use: [
             MiniCssExtractPlugin.loader,
             "css-loader",
+            this.autoprefix(),
             "sass-loader"
           ],
         },

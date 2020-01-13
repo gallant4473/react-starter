@@ -34,7 +34,7 @@ const productionConfig = merge([
           commons: {
             test: /[\\/]node_modules[\\/]/,
             name: "vendor",
-            chunks: "initial",
+            chunks: "all",
           },
         },
       },
@@ -62,13 +62,13 @@ const productionConfig = merge([
       outputPath: 'fonts/'
     }
   }),
-  parts.extractSCSS(),
+  parts.extractSCSS([parts.autoprefix()]),
   parts.extractCSS({
     use: ["css-loader", parts.autoprefix()]
   }),
-  parts.purifyCSS({
-    paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
-  }),
+  // parts.purifyCSS({
+  //   paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
+  // }),
   {
     performance: {
       hints: "warning", // "error" or false are valid too

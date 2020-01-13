@@ -6,6 +6,7 @@
 body {
   background: lime;
   font-family: 'myfontfamily', Arial, sans-serif;
+  display: flex;
 }
 
 .hello1 {
