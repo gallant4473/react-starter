@@ -1,0 +1,8 @@
+/**
+ * Basic typography style for copy text
+ */
+body {
+  color: $text-color;
+  @include font-family(regular);
+  font-size: 14px;
+}

@@ -1,24 +1,28 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
-const Home = props => (
-  <div className='hello' >
-    its my home
-    <button onClick={() => props.history.push('/about')} >go to about</button>
-    <button onClick={() => props.history.push('/contact')} >go to contact</button>
-  </div>
-)
+const Home = (props) => {
+  const [active, setActive] = useState(false);
+  return (
+    <div className="hello">
+      its my home
+      <button type="button" onClick={() => props.history.push('/about')}>go to about</button>
+      <button type="button" onClick={() => props.history.push('/contact')}>go to contact</button>
+      <button type="button" onClick={() => setActive(!active)}>{active ? 'Active' : 'In Active'}</button>
+    </div>
+  );
+};
 
 Home.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  })
-}
+    push: PropTypes.func.isRequired,
+  }),
+};
 Home.defaultProps = {
   history: {
-    push: () => ''
-  }
-}
+    push: () => '',
+  },
+};
 
-export default withRouter(Home)
+export default withRouter(Home);

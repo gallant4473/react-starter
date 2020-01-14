@@ -1,0 +1,101 @@
+// -----------------------------------------------------------------------------
+// This file contains all @font-face declarations, if any.
+// -----------------------------------------------------------------------------
+
+$font-path: '../fonts/';
+// $font-path: '';
+
+@mixin font-face(
+  $font-family,
+  $file-path,
+  $weight: normal,
+  $style: normal,
+  $asset-pipeline: false,
+  $file-formats: eot woff2 woff ttf svg) {
+
+  $font-url-prefix: font-url-prefixer(false);
+
+  @font-face {
+    font-family: $font-family;
+    font-style: $style;
+    font-weight: $weight;
+    font-display: swap;
+
+    src: font-source-declaration(
+      $font-family,
+      $file-path,
+      $asset-pipeline,
+      $file-formats,
+      $font-url-prefix
+    );
+  }
+}
+
+// Used for creating the source string for fonts using @font-face
+// Reference: http://goo.gl/Ru1bKP
+
+@function font-url-prefixer($asset-pipeline) {
+  @if $asset-pipeline == true {
+    @return font-url;
+  } @else {
+    @return url;
+  }
+}
+
+@function font-source-declaration(
+  $font-family,
+  $file-path,
+  $asset-pipeline,
+  $file-formats,
+  $font-url) {
+
+  $src: ();
+
+  $formats-map: (
+    //eot:   '#{$file-path}.eot?#iefix' format('embedded-opentype'),
+    woff2: '#{$file-path}.woff2' format('woff2'),
+    woff:  '#{$file-path}.woff' format('woff'),
+    //ttf:   '#{$file-path}.ttf' format('truetype'),
+    //svg:   '#{$file-path}.svg##{$font-family}' format('svg')
+  );
+
+  @each $key, $values in $formats-map {
+    @if contains($file-formats, $key) {
+      $file-path: nth($values, 1);
+      $font-format: nth($values, 2);
+
+      @if $asset-pipeline == true {
+        $src: append($src, font-url($file-path) $font-format, comma);
+      } @else {
+        $src: append($src, url($file-path) $font-format, comma);
+      }
+    }
+  }
+
+  @return $src;
+}
+
+@include font-face('regular', '#{$font-path}opensans-regular', $file-formats: woff2 woff);
+@include font-face('medium', '#{$font-path}opensans-semibold', $file-formats: woff2 woff);
+@include font-face('bold', '#{$font-path}opensans-bold', $file-formats: woff2 woff);
+@include font-face('light', '#{$font-path}opensans-light', $file-formats: woff2 woff);
+@include font-face('italic', '#{$font-path}opensans-italic', $file-formats: woff2 woff);
+
+
+$font-family: (
+  embeded: (
+    bold: bold,
+    italic: italic,
+    regular: regular,
+    light: light,
+    medium: medium,
+  ),
+  fallbacks: 'Helvetica, Arial, sans-serif',
+);
+
+@function getFontFamily($font: lato) {
+  @return unquote(map-get(map-get($font-family, embeded), $font) +','+ map-get($font-family, fallbacks));
+}
+@mixin font-family($font: lato) {
+  font-family: getFontFamily($font);
+}

@@ -1,36 +1,22 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Loadable from 'react-loadable'
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-const HomePage = Loadable({
-  loader: () => import('../Home'),
-  loading() {
-    return <div>Loading...</div>
-  }
-})
+const HomePage = lazy(() => import('../Home'));
 
-const AboutPage = Loadable({
-  loader: () => import('../About'),
-  loading() {
-    return <div>Loading...</div>
-  }
-})
+const AboutPage = lazy(() => import('../About'));
 
-const ContactPage = Loadable({
-  loader: () => import('../Contact'),
-  loading() {
-    return <div>Loading...</div>
-  }
-})
+const ContactPage = lazy(() => import('../Contact'));
 
 const Main = () => (
   <Router>
-    <Switch>
-      <Route exact path='/' component={HomePage} />
-      <Route exact path='/about' component={AboutPage} />
-      <Route exact path='/contact' component={ContactPage} />
-    </Switch>
+    <Suspense fallback={<h1>Still Loading…</h1>}>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/about" component={AboutPage} />
+        <Route exact path="/contact" component={ContactPage} />
+      </Switch>
+    </Suspense>
   </Router>
-)
+);
 
-export default Main
+export default Main;
