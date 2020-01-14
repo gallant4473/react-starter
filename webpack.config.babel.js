@@ -8,6 +8,7 @@ import {
   attachRevision, notifyAlert, loadCSS, loadSCSS, devServer, writeDevBuildToFile, page,
   bundleAnalyzer,
 } from './config/webpack.parts.babel';
+import CONFIG from './config/config';
 
 const PATHS = {
   app: join(__dirname, 'src'),
@@ -15,7 +16,7 @@ const PATHS = {
   svgImages: join(__dirname, 'public/svg/small/*.svg'),
 };
 
-const commonConfig = merge([
+const commonConfig = (type, app) => merge([
   {
     optimization: {
       runtimeChunk: 'single',
@@ -38,18 +39,20 @@ const commonConfig = merge([
       },
     },
   },
-  setFreeVariable('HELLO', 'hello from config'),
-  loadJavaScript({ include: PATHS.app }),
+  setFreeVariable({
+    ...CONFIG[type][app], current: app, APPS: CONFIG[type],
+  }),
+  loadJavaScript({ include: `${PATHS.app}/${app}` }),
   loadSvgSprite({
     include: PATHS.svgImages,
   }),
 ]);
 
-const productionConfig = merge([
+const productionConfig = (type, app) => merge([
   {
     recordsPath: join(__dirname, 'records.json'),
   },
-  clean(PATHS.build),
+  clean(),
   minifyJavaScript(),
   minifyCSS({
     options: {
@@ -59,16 +62,6 @@ const productionConfig = merge([
       safe: true,
     },
   }),
-  // {
-  //   optimization: {
-  //     splitChunks: {
-  //       chunks: 'initial',
-  //     },
-  //     runtimeChunk: {
-  //       name: 'manifest',
-  //     },
-  //   },
-  // },
   generateSourceMaps({ type: 'source-map' }),
   loadImages({
     options: {
@@ -93,7 +86,7 @@ const productionConfig = merge([
     use: ['css-loader', autoprefix()],
   }),
   purifyCSS({
-    paths: sync(`${PATHS.app}/**/*.js`, { nodir: true }),
+    paths: sync(`${`${PATHS.app}/${app}`}/**/*.js`, { nodir: true }),
   }),
   {
     performance: {
@@ -128,22 +121,23 @@ const developmentConfig = merge([
 ]);
 
 export default ({ mode, ...rest }) => {
+  const { app, type } = rest;
   const pages = [
     page({
       path: 'app',
       title: 'Title',
-      template: join(PATHS.app, 'index.ejs'),
-      entry: ['@babel/polyfill', join(PATHS.app, 'index.js')],
+      template: join(`${PATHS.app}/${app}`, 'index.ejs'),
+      entry: ['@babel/polyfill', join(`${PATHS.app}/${app}`, 'index.js')],
       output: mode === 'production' ? {
-        path: PATHS.build,
+        path: `${PATHS.build}/${app}-${type}`,
         chunkFilename: '[name].[chunkhash:4].js',
         filename: '[name].[chunkhash:4].js',
       } : {
-        path: resolve(__dirname, 'dist'),
+        path: resolve(__dirname, `dist/${app}`),
         filename: 'main.js',
       },
     }),
   ];
-  const mainConfig = mode === 'production' ? productionConfig : developmentConfig;
-  return merge([commonConfig, mainConfig, { mode, ...rest }].concat(pages));
+  const mainConfig = mode === 'production' ? productionConfig(type, app) : developmentConfig;
+  return merge([commonConfig(type, app), mainConfig, { mode }].concat(pages));
 };

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import 'react-hot-loader/patch';
 
 import Root from './root';
-import '../public/styles/main.scss';
+import '../../public/styles/main.scss';
 
 const render = (Component) => {
   ReactDOM.render(<AppContainer><Component /></AppContainer>, document.getElementById('app'));

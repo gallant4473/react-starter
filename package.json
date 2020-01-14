@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env.mode development\"",
-    "build": "webpack --env.mode production",
+    "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env.mode development --env.type DEVELOPMENT --env.app app \"",
+    "build": "webpack --env.mode production --env.type PRODUCTION --env.app app ",
     "lint": "eslint ./src/**/**.js",
     "clean": "rm -rf dist coverage",
     "coverage": "jest --coverage",

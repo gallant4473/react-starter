@@ -322,12 +322,14 @@ export function minifyCSS({ options }) {
   });
 }
 
-export function setFreeVariable(key, value) {
+export function setFreeVariable(value) {
+  const newValue = { ...value };
   const env = {};
-  env[key] = JSON.stringify(value);
-
+  Object.keys(newValue).forEach((data) => { env[data] = JSON.stringify(newValue[data]); });
   return {
-    plugins: [new DefinePlugin(env)],
+    plugins: [new DefinePlugin({
+      'process.env': env,
+    })],
   };
 }
 
